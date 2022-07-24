@@ -10,13 +10,20 @@ final class SolutionTest extends TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testIsSolved(array $nums, int $target, array $expectedResult): void
+    public function testIsSolved(array $nums, int $target, ?array $expectedResult): void
     {
         $solution = new Solution();
 
         $actualResult = $solution->twoSum($nums, $target);
 
-        $this->assertSame($expectedResult, $actualResult);
+        if ($expectedResult === null) {
+            $this->assertNull($actualResult);
+
+            return;
+        }
+
+        $this->assertIsArray($actualResult);
+        $this->assertEqualsCanonicalizing($expectedResult, $actualResult);
     }
 
     public function dataProvider(): array
@@ -36,6 +43,11 @@ final class SolutionTest extends TestCase
                 [3, 3],
                 6,
                 [0, 1]
+            ],
+            [
+                [1, 1, 1],
+                1000,
+                null
             ]
         ];
     }

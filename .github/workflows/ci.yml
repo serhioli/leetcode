@@ -1,0 +1,26 @@
+name: 'Continuous Integration'
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    strategy:
+      matrix:
+        platform: [ 'ubuntu-latest', 'macos-latest' ]
+        php: [ '7.4', '8.1' ]
+    name: 'Testing ${{ matrix.php }}/${{ matrix.platform }}'
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup PHP Action
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        extensions: xdebug
+        tools: composer
+    - run: |
+        make ci
+        composer install
+    - run: vendor/bin/phpunit
+    - run: vendor/bin/infection --threads=4

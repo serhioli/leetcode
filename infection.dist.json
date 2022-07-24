@@ -2,30 +2,15 @@
     "source": {
         "directories": [
             "src"
-        ],
-        "excludes": [
-            "Config",
-            "Folder/with/File.php",
-            "/\\.interface\\.php/",
-            "{Infrastructure/.*}"
         ]
     },
     "timeout": 10,
     "logs": {
-        "text": "infection.log",
-        "html": "infection.html",
-        "summary": "summary.log",
-        "json": "infection-log.json",
-        "perMutator": "per-mutator.md",
-        "github": true,
-        "badge": {
-            "branch": "/^release-.*$/"
-        }
+        "text": "tests/_output/infection/infection.log",
+        "perMutator": "tests/_output/infection/per-mutator.md"
     },
-    "tmpDir": "/temp/infection",
     "mutators": {
         "@default": true
     },
-    "testFramework":"codeception",
-    "initialTestsPhpOptions": "-d zend_extension=xdebug.so"
+    "testFramework": "phpunit"
 }
