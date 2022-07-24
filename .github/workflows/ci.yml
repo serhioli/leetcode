@@ -1,0 +1,15 @@
+name: 'Continuous Integration'
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    uses: accuracode/workflow-continuous-integration/.github/workflows/testing.yml@main
+
+  code-ql:
+    uses: accuracode/workflow-continuous-integration/.github/workflows/code-quality.yml@main

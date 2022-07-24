@@ -1,0 +1,33 @@
+{
+    "name": "serhioli/leetcode",
+    "description": "Solved problems for leetcode",
+    "license": "Unlicense",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "serhioli\\leetcode\\": "src/",
+            "serhioli\\leetcode\\tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sergei Lysogor",
+            "email": "me@serhioli.net"
+        }
+    ],
+    "config": {
+        "platform": {
+            "php": "8.0"
+        },
+        "sort-packages": true,
+        "allow-plugins": {
+            "infection/extension-installer": true
+        }
+    },
+    "require": {
+        "php": ">=8.0",
+        "infection/infection": "~0.26.4",
+        "phpunit/phpunit": "~9.5",
+        "vimeo/psalm": "~4.24"
+    }
+}
