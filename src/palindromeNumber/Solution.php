@@ -6,7 +6,7 @@ namespace serhioli\leetcode\palindromeNumber;
 
 class Solution
 {
-    function isPalindrome(int $x): bool
+    public function isPalindrome(int $x): bool
     {
         $intStr = (string)$x;
 
