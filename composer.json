@@ -1,5 +1,7 @@
 {
     "name": "serhioli/leetcode",
+    "description": "Solved problems for leetcode",
+    "license": "Unlicense",
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -20,7 +22,7 @@
         }
     },
     "require": {
-        "php": "^8.1",
+        "php": "^8",
         "infection/infection": "^0",
         "phpunit/phpunit": "^9.5",
         "symfony/var-dumper": "^6.1",

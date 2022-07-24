@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         platform: [ 'ubuntu-latest', 'macos-latest' ]
-        php: [ '7.4', '8.1' ]
+        php: [ '8.0', '8.1', '8.2' ]
     name: 'Testing ${{ matrix.php }}/${{ matrix.platform }}'
     runs-on: ${{ matrix.platform }}
     steps:
@@ -21,6 +21,7 @@ jobs:
         tools: composer
     - run: |
         make ci
+        composer validate --strict
         composer install
     - run: vendor/bin/phpunit
     - run: vendor/bin/infection --threads=4
