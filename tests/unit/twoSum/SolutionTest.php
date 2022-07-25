@@ -16,7 +16,8 @@ final class SolutionTest extends TestCase
 
         $actualResult = $solution->twoSum($nums, $target);
 
-        if ($expectedResult === null) {
+        if ($expectedResult === null)
+        {
             $this->assertNull($actualResult);
 
             return;
@@ -42,13 +43,13 @@ final class SolutionTest extends TestCase
             [
                 [3, 3],
                 6,
-                [0, 1]
+                [0, 1],
             ],
             [
                 [1, 1, 1],
                 1000,
-                null
-            ]
+                null,
+            ],
         ];
     }
 }

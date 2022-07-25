@@ -6,10 +6,16 @@ namespace serhioli\leetcode\palindromeLinkedList;
 
 class Solution
 {
-    public function isPalindrome(int $x): bool
+    public function isPalindrome(ListNode $head): bool
     {
-        $intStr = (string)$x;
+        $result = '';
 
-        return strrev($intStr) === $intStr;
+        $next = $head;
+        while ($next) {
+            $result .= $next->val;
+            $next = $next->next;
+        }
+
+        return strrev($result) === $result;
     }
 }

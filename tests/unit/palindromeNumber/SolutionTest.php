@@ -1,54 +1,31 @@
 <?php declare(strict_types=1);
 
-namespace serhioli\leetcode\tests\unit\twoSum;
+namespace serhioli\leetcode\tests\unit\palindromeNumber;
 
 use PHPUnit\Framework\TestCase;
-use serhioli\leetcode\twoSum\Solution;
+use serhioli\leetcode\palindromeNumber\Solution;
 
 final class SolutionTest extends TestCase
 {
     /**
      * @dataProvider dataProvider
      */
-    public function testIsSolved(array $nums, int $target, ?array $expectedResult): void
+    public function testIsSolved(int $x, bool $expectedResult): void
     {
         $solution = new Solution();
 
-        $actualResult = $solution->twoSum($nums, $target);
+        $actualResult = $solution->isPalindrome($x);
 
-        if ($expectedResult === null) {
-            $this->assertNull($actualResult);
-
-            return;
-        }
-
-        $this->assertIsArray($actualResult);
-        $this->assertEqualsCanonicalizing($expectedResult, $actualResult);
+        $this->assertSame($expectedResult, $actualResult);
     }
 
     public function dataProvider(): array
     {
         return [
-            [
-                [2, 7, 11, 15],
-                9,
-                [0, 1],
-            ],
-            [
-                [3, 2, 4],
-                6,
-                [1, 2],
-            ],
-            [
-                [3, 3],
-                6,
-                [0, 1]
-            ],
-            [
-                [1, 1, 1],
-                1000,
-                null
-            ]
+            [121, true],
+            [-121, false],
+            [728, false],
+            [12, false],
         ];
     }
 }

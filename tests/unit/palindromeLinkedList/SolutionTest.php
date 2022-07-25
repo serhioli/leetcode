@@ -3,18 +3,28 @@
 namespace serhioli\leetcode\tests\unit\palindromeLinkedList;
 
 use PHPUnit\Framework\TestCase;
+use serhioli\leetcode\palindromeLinkedList\ListNode;
 use serhioli\leetcode\palindromeLinkedList\Solution;
 
 final class SolutionTest extends TestCase
 {
+    public function testListNode(): void
+    {
+        $node = new ListNode();
+
+        $this->assertInstanceOf(ListNode::class, $node);
+        $this->assertSame(0, $node->val);
+    }
+
     /**
+     * @depends      testListNode
      * @dataProvider dataProvider
      */
-    public function testIsSolved(int $x, bool $expectedResult): void
+    public function testIsSolved(ListNode $head, bool $expectedResult): void
     {
         $solution = new Solution();
 
-        $actualResult = $solution->isPalindrome($x);
+        $actualResult = $solution->isPalindrome($head);
 
         $this->assertEquals($expectedResult, $actualResult);
     }
@@ -23,14 +33,31 @@ final class SolutionTest extends TestCase
     {
         return [
             [
-                121, true
+                $this->buildForSequence([1, 2, 1]), true,
             ],
             [
-                -121, false
+                $this->buildForSequence([1, 2, 2, 1]), true,
             ],
             [
-                10, false
-            ]
+                $this->buildForSequence([1, 2, 3, 1]), false,
+            ],
+            [
+                $this->buildForSequence([-1, 2, 1]), false,
+            ],
+            [
+                $this->buildForSequence([1, 0]), false,
+            ],
         ];
+    }
+
+    protected function buildForSequence(array $seq): ListNode
+    {
+        $previous = null;
+        foreach (array_reverse($seq) as $value)
+        {
+            $previous = new ListNode($value, $previous);
+        }
+
+        return $previous;
     }
 }
