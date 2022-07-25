@@ -30,8 +30,8 @@ jobs:
     runs-on: 'ubuntu-latest'
     steps:
     - uses: actions/checkout@v3
-    - continue-on-error: true
     - name: 'Preparing environment'
+      continue-on-error: true
       run: |
         make ci
         composer validate --strict
