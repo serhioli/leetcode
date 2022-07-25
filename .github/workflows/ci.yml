@@ -24,8 +24,8 @@ jobs:
           composer install
       - run: vendor/bin/phpunit
       - run: vendor/bin/infection --threads=4
-  psalm-security:
-    name: 'Executing Psalm Taint analyzer'
+  psalm-codeql:
+    name: 'Running Psalm'
     runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v3
