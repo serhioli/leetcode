@@ -12,29 +12,28 @@ jobs:
     name: 'Testing on ${{ matrix.php }}'
     runs-on: 'ubuntu-latest'
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup PHP Action
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php }}
-        extensions: xdebug
-        tools: composer
-    - run: |
-        make ci
-        composer validate --strict
-        composer install
-    - run: vendor/bin/phpunit
-    - run: vendor/bin/infection --threads=4
+      - uses: actions/checkout@v3
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: xdebug
+          tools: composer
+      - run: |
+          make ci
+          composer validate --strict
+          composer install
+      - run: vendor/bin/phpunit
+      - run: vendor/bin/infection --threads=4
   psalm:
     name: 'Executing Psalm analyzer'
     runs-on: 'ubuntu-latest'
     steps:
-    - uses: actions/checkout@v3
-    - uses: docker://vimeo/psalm-github-actions
-      with:
-        security_analysis: true
-        report_file: results.sarif
-    - name: 'Upload Security Analysis results to GitHub'
-      uses: github/codeql-action/upload-sarif@v1
-      with:
-        sarif_file: results.sarif
+      - uses: actions/checkout@v3
+      - run: |
+          make ci
+          composer validate --strict
+          composer install
+      - name: 'Upload Security Analysis results to GitHub'
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: results.sarif
