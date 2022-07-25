@@ -18,23 +18,26 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: xdebug
           tools: composer
-      - run: |
+      - name: Preparing environment
+        run: |
           make ci
           composer validate --strict
           composer install
       - run: vendor/bin/phpunit
       - run: vendor/bin/infection --threads=4
   psalm-codeql:
-    name: 'Running Psalm'
+    name: 'Get Psalm CodeQL Report'
     runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v3
       - continue-on-error: true
+      - name: Preparing environment
         run: |
           make ci
           composer validate --strict
           composer install
-          vendor/bin/psalm --output-format=github --report=tests/_output/psalm/report.sarif
+      - name: 'Running Psalm'
+        run: vendor/bin/psalm --output-format=github --report=tests/_output/psalm/report.sarif
       - name: 'Upload Security Analysis results to GitHub'
         uses: github/codeql-action/upload-sarif@v2
         with:
