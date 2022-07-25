@@ -33,7 +33,7 @@ jobs:
           make ci
           composer validate --strict
           composer install
-          vendor/bin/psalm --report=tests/_output/psalm/report.sarif
+          vendor/bin/psalm --output=github --report=tests/_output/psalm/report.sarif
       - name: 'Upload Security Analysis results to GitHub'
         uses: github/codeql-action/upload-sarif@v1
         with:
