@@ -16,8 +16,8 @@ class Solution
         $runningSum = 0;
 
         return array_map(
-            static function(int $value) use (&$runningSum): int {
-                $runningSum = (int)$runningSum + $value;
+            static function (int $value) use (&$runningSum): int {
+                $runningSum = (int) $runningSum + $value;
 
                 return $value + ($runningSum - $value);
             },

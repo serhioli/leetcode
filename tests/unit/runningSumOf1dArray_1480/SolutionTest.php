@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace serhioli\leetcode\tests\unit\runningSumOf1dArray_1480;
 
@@ -18,7 +20,6 @@ final class SolutionTest extends TestCase
 
         $this->assertSameSize($nums, $actualResult);
         $this->assertEquals($expectedResult, $actualResult);
-
     }
 
     public function dataProvider(): array
