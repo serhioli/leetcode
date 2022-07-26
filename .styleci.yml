@@ -1,7 +1,7 @@
-risky: false
+risky: true
 version: 8.1
-preset: 'psr12'
+preset: 'symfony'
 finder:
   name: "*.php"
   path:
-  - "src"
+    - "src"
