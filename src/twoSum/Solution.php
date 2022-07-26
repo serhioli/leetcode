@@ -17,7 +17,7 @@ class Solution
 
         foreach ($nums as $index => $value) {
             $remainExpected = $target - $value;
-            $remainIndex    = $remains[$remainExpected] ?? null;
+            $remainIndex = $remains[$remainExpected] ?? null;
             if (!$remainIndex || $remainIndex === $index) {
                 continue;
             }

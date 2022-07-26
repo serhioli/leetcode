@@ -8,7 +8,7 @@ class Solution
 {
     public function isPalindrome(int $x): bool
     {
-        $intStr = (string)$x;
+        $intStr = (string) $x;
 
         return strrev($intStr) === $intStr;
     }
