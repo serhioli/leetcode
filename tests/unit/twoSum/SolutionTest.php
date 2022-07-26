@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace serhioli\leetcode\tests\unit\twoSum;
 
@@ -16,8 +18,7 @@ final class SolutionTest extends TestCase
 
         $actualResult = $solution->twoSum($nums, $target);
 
-        if ($expectedResult === null)
-        {
+        if (null === $expectedResult) {
             $this->assertNull($actualResult);
 
             return;
