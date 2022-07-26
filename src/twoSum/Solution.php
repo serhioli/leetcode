@@ -6,14 +6,21 @@ namespace serhioli\leetcode\twoSum;
 
 class Solution
 {
+    /**
+     * @psalm-param list<int> $nums
+     *
+     * @psalm-return array<int, int>|null
+     */
     public function twoSum(array $nums, int $target): ?array
     {
         $remains = array_flip($nums);
 
-        foreach ($nums as $index => $value) {
+        foreach ($nums as $index => $value)
+        {
             $remainExpected = $target - $value;
-            $remainIndex = $remains[$remainExpected] ?? null;
-            if (!$remainIndex || $remainIndex === $index) {
+            $remainIndex    = $remains[$remainExpected] ?? null;
+            if (!$remainIndex || $remainIndex === $index)
+            {
                 continue;
             }
 
