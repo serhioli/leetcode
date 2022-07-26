@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace serhioli\leetcode\tests\unit\palindromeLinkedList;
 
@@ -53,8 +55,7 @@ final class SolutionTest extends TestCase
     protected function buildForSequence(array $seq): ListNode
     {
         $previous = null;
-        foreach (array_reverse($seq) as $value)
-        {
+        foreach (array_reverse($seq) as $value) {
             $previous = new ListNode($value, $previous);
         }
 
