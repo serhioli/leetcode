@@ -15,12 +15,10 @@ class Solution
     {
         $remains = array_flip($nums);
 
-        foreach ($nums as $index => $value)
-        {
+        foreach ($nums as $index => $value) {
             $remainExpected = $target - $value;
             $remainIndex    = $remains[$remainExpected] ?? null;
-            if (!$remainIndex || $remainIndex === $index)
-            {
+            if (!$remainIndex || $remainIndex === $index) {
                 continue;
             }
 
