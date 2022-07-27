@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace serhioli\leetcode\palindromeLinkedList;
+namespace serhioli\leetcode\p234_PalindromeLinkedList;
 
 class Solution
 {

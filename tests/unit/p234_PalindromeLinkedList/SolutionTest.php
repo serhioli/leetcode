@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace serhioli\leetcode\tests\unit\palindromeLinkedList;
+namespace serhioli\leetcode\tests\unit\p234_PalindromeLinkedList;
 
 use PHPUnit\Framework\TestCase;
-use serhioli\leetcode\palindromeLinkedList\ListNode;
-use serhioli\leetcode\palindromeLinkedList\Solution;
+use serhioli\leetcode\p234_PalindromeLinkedList\ListNode;
+use serhioli\leetcode\p234_PalindromeLinkedList\Solution;
 
 final class SolutionTest extends TestCase
 {

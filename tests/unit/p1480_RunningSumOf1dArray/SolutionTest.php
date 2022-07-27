@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace serhioli\leetcode\tests\unit\runningSumOf1dArray_1480;
+namespace serhioli\leetcode\tests\unit\p1480_RunningSumOf1dArray;
 
 use PHPUnit\Framework\TestCase;
 use serhioli\leetcode\p1480_RunningSumOf1dArray\Solution;

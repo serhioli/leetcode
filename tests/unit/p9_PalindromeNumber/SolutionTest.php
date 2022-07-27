@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace serhioli\leetcode\tests\unit\palindromeNumber;
+namespace serhioli\leetcode\tests\unit\p9_PalindromeNumber;
 
 use PHPUnit\Framework\TestCase;
-use serhioli\leetcode\palindromeNumber\Solution;
+use serhioli\leetcode\p9_PalindromeNumber\Solution;
 
 final class SolutionTest extends TestCase
 {

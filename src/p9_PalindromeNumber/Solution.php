@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace serhioli\leetcode\palindromeNumber;
+namespace serhioli\leetcode\p9_PalindromeNumber;
 
 class Solution
 {
