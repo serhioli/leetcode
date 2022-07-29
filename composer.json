@@ -28,6 +28,6 @@
         "php": ">=8.0",
         "infection/infection": "~0.26.4",
         "phpunit/phpunit": "~9.5",
-        "vimeo/psalm": "~4.24"
+        "vimeo/psalm": "~4.25"
     }
 }
