@@ -9,3 +9,8 @@ tasks:
   - name: test2
     init: sleep 10 && touch prebuild-test2.txt
     command: composer install && touch command-test2.txt
+
+github:
+  prebuilds:
+    master: true
+    pullRequests: false
