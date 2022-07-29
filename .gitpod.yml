@@ -4,11 +4,13 @@
 
 tasks:
   - name: test1
-    init: sleep 10 && touch prebuild-test1.txt
-    command: composer install && touch command-test1.txt
+    before: touch before-task1.txt
+    init: composer install && sleep 10 && touch prebuild-test1.txt
+    command: touch command-test1.txt
   - name: test2
-    init: sleep 10 && touch prebuild-test2.txt
-    command: composer install && touch command-test2.txt
+    before: touch before-task2.txt
+    init: composer install && sleep 10 && touch prebuild-test2.txt
+    command: touch command-test2.txt
 
 github:
   prebuilds:
