@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace serhioli\leetcode\tests\unit\p1_TwoSum;
+namespace serhioli\leetcode\tests\unit\p1_twoSum;
 
 use PHPUnit\Framework\TestCase;
-use serhioli\leetcode\p1_TwoSum\Solution;
+use serhioli\leetcode\p1_twoSum\Solution;
 
 final class SolutionTest extends TestCase
 {

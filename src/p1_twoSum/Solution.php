@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace serhioli\leetcode\p1_TwoSum;
+namespace serhioli\leetcode\p1_twoSum;
 
 class Solution
 {

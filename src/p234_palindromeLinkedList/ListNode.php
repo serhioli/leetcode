@@ -1,6 +1,6 @@
 <?php
 
-namespace serhioli\leetcode\p234_PalindromeLinkedList;
+namespace serhioli\leetcode\p234_palindromeLinkedList;
 
 class ListNode
 {

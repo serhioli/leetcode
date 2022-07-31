@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace serhioli\leetcode\tests\unit\p1480_RunningSumOf1dArray;
+namespace serhioli\leetcode\tests\unit\p1480_runningSumOf1dArray;
 
 use PHPUnit\Framework\TestCase;
-use serhioli\leetcode\p1480_RunningSumOf1dArray\Solution;
+use serhioli\leetcode\p1480_runningSumOf1dArray\Solution;
 
 final class SolutionTest extends TestCase
 {

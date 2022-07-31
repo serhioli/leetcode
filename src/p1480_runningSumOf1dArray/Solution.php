@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace serhioli\leetcode\p1480_RunningSumOf1dArray;
+namespace serhioli\leetcode\p1480_runningSumOf1dArray;
 
 class Solution
 {
