@@ -2,7 +2,8 @@ risky: false
 version: 8.1
 preset: 'symfony'
 finder:
-  name: "*.php"
+  name: '*.php'
   path:
-    - "src"
-    - "tests"
+    - 'bin'
+    - 'src'
+    - 'tests'

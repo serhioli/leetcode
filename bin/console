@@ -1,0 +1,188 @@
+#!/usr/bin/env php
+<?php
+require __DIR__ . '/../vendor/autoload.php';
+
+use Laminas\Code\DeclareStatement;
+use Laminas\Code\Generator\ClassGenerator;
+use Laminas\Code\Generator\DocBlockGenerator;
+use Laminas\Code\Generator\FileGenerator;
+use Laminas\Code\Generator\MethodGenerator;
+use Laminas\Code\Generator\ParameterGenerator;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\String\UnicodeString;
+
+#[AsCommand(name: 'bootstrap', hidden: false)]
+final class BootstrapCommand extends Command
+{
+    public function configure(): void
+    {
+        $this
+            ->setAliases(['b'])
+            ->addOption('id', 'i', InputOption::VALUE_REQUIRED)
+            ->addArgument('name', mode: InputArgument::REQUIRED);
+    }
+
+    protected function interact(InputInterface $input, OutputInterface $output): void
+    {
+        $isInputValid = $input->getOption('id') && $input->getArgument('name');
+
+        if (!$isInputValid)
+        {
+            throw new RuntimeException('You need to specify options id and name');
+        }
+    }
+
+    /**
+     * @param InputInterface         $input
+     * @param ConsoleOutputInterface $output
+     *
+     * @return int
+     */
+    public function execute(InputInterface $input, OutputInterface $output): int
+    {
+        $section = $output->section();
+
+        $generator = new SuiteGenerator(
+            (int)$input->getOption('id'),
+            (string)$input->getArgument('name')
+        );
+
+        echo $generator->prepare(SuiteGenerator::TYPE_SOLUTION)->generate();
+        die();
+
+        $section->overwrite('All done!');
+
+        return Command::SUCCESS;
+    }
+}
+
+final class SuiteGenerator
+{
+    public const TYPE_SOLUTION = 0;
+    public const TYPE_TESTCASE = 1;
+
+    private int $type = -1;
+
+    public function __construct(
+        private int    $suiteId,
+        private string $suiteName,
+    ) {
+    }
+
+    private function setType(int $type): void
+    {
+        if (!in_array($type, [self::TYPE_SOLUTION, self::TYPE_TESTCASE]))
+        {
+            throw new RuntimeException('Wrong type');
+        }
+
+        $this->type = $type;
+    }
+
+    public function prepare(int $type): FileGenerator
+    {
+        $this->setType($type);
+
+        $file = new FileGenerator();
+        $file->setDeclares([DeclareStatement::strictTypes(1)]);
+        $file->setNamespace($this->getFileNamespace());
+        $file->setClass($this->getClass());
+
+        return $file;
+    }
+
+    private function getClass(): ClassGenerator
+    {
+        $class = new ClassGenerator();
+        $class->setName($this->getClassName());
+        if ($this->type === self::TYPE_TESTCASE)
+        {
+            $class->addUse(TestCase::class);
+            $class->setExtendedClass(TestCase::class);
+        }
+
+        $this->fillMethods($class);
+
+        return $class;
+    }
+
+    private function fillMethods(ClassGenerator $class): void
+    {
+        if ($this->type === self::TYPE_SOLUTION)
+        {
+            $class->addMethodFromGenerator(
+                new MethodGenerator('changeName')
+            );
+        }
+        if ($this->type === self::TYPE_TESTCASE)
+        {
+            $class->addMethodFromGenerator(
+                new MethodGenerator(
+                    'testIsSolved',
+                    [
+                        new ParameterGenerator('value'),
+                    ],
+                    docBlock: DocBlockGenerator::fromArray([
+                        'tags' => [
+                            [
+                                'name'  => 'dataProvider',
+                                'description' => 'dataProvider',
+                            ],
+                        ],
+                    ])
+                )
+            );
+
+            $class->addMethodFromGenerator(
+                new MethodGenerator(
+                    'dataProvider',
+                    body: 'return [];'
+                )
+            );
+        }
+    }
+
+    private function getClassName(): string
+    {
+        return match ($this->type)
+        {
+            self::TYPE_SOLUTION => 'Solution',
+            self::TYPE_TESTCASE => 'SolutionTest',
+            default => throw new RuntimeException(),
+        };
+    }
+
+    private function getFileNamespace(): string
+    {
+        $namespace = 'serhioli\\leetcode\\';
+        $namespace .= match ($this->type)
+        {
+            self::TYPE_TESTCASE => 'test\\unit\\',
+            default => '',
+        };
+
+        $normalizedPathname = (new UnicodeString($this->suiteName))->camel()->toString();
+
+        $namespace .= sprintf(
+            'p%d_%s',
+            $this->suiteId,
+            $normalizedPathname,
+        );
+
+        return $namespace;
+    }
+}
+
+//region Launch Application
+$application = new Application();
+$application->add(new BootstrapCommand());
+$application->run();
+//endregion
