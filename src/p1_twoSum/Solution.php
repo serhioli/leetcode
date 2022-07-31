@@ -7,9 +7,9 @@ namespace serhioli\leetcode\p1_twoSum;
 class Solution
 {
     /**
-     * @psalm-param list<int> $nums
+     * @param int[] $nums
      *
-     * @psalm-return array<int, int>|null
+     * @return array{array-key, array-key}|null
      */
     public function twoSum(array $nums, int $target): ?array
     {

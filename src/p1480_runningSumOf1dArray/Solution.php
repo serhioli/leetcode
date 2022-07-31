@@ -7,9 +7,9 @@ namespace serhioli\leetcode\p1480_runningSumOf1dArray;
 class Solution
 {
     /**
-     * @psalm-param list<int> $nums
+     * @param int[] $nums
      *
-     * @psalm-return list<int>
+     * @return int[]
      */
     public function runningSum(array $nums): array
     {
