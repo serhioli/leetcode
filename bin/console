@@ -17,6 +17,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Path;
 use Symfony\Component\String\UnicodeString;
 
 #[AsCommand(name: 'bootstrap', hidden: false)]
@@ -48,17 +50,40 @@ final class BootstrapCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $section = $output->section();
-
         $generator = new SuiteGenerator(
             (int)$input->getOption('id'),
             (string)$input->getArgument('name')
         );
 
-        echo $generator->prepare(SuiteGenerator::TYPE_SOLUTION)->generate();
-        die();
+        $types = [
+            SuiteGenerator::TYPE_SOLUTION => [
+                __DIR__ . '/../src',
+                'serhioli\\leetcode',
+                'Solution',
+            ],
+            SuiteGenerator::TYPE_TESTCASE => [
+                __DIR__ . '/../tests/unit',
+                'serhioli\\leetcode\\tests\\unit',
+                'SolutionTest',
+            ],
+        ];
 
-        $section->overwrite('All done!');
+        $filesystem = new Filesystem();
+        foreach ($types as $type => $config)
+        {
+            [$pathPrefix, $classPrefix, $fileName] = $config;
+
+            $file = $generator->prepare(
+                $type,
+                $classPrefix,
+                $fileName
+            );
+
+            $filesystem->dumpFile(
+                Path::canonicalize("{$pathPrefix}/{$generator->getNSAlias()}/{$fileName}.php"),
+                $file->generate()
+            );
+        }
 
         return Command::SUCCESS;
     }
@@ -70,6 +95,8 @@ final class SuiteGenerator
     public const TYPE_TESTCASE = 1;
 
     private int $type = -1;
+    private string $namespacePrefix = '\\';
+    private string $className = 'SomeClass';
 
     public function __construct(
         private int    $suiteId,
@@ -87,9 +114,11 @@ final class SuiteGenerator
         $this->type = $type;
     }
 
-    public function prepare(int $type): FileGenerator
+    public function prepare(int $type, string $namespacePrefix, string $className): FileGenerator
     {
         $this->setType($type);
+        $this->namespacePrefix = $namespacePrefix;
+        $this->className       = $className;
 
         $file = new FileGenerator();
         $file->setDeclares([DeclareStatement::strictTypes(1)]);
@@ -102,7 +131,7 @@ final class SuiteGenerator
     private function getClass(): ClassGenerator
     {
         $class = new ClassGenerator();
-        $class->setName($this->getClassName());
+        $class->setName($this->className);
         if ($this->type === self::TYPE_TESTCASE)
         {
             $class->addUse(TestCase::class);
@@ -133,7 +162,7 @@ final class SuiteGenerator
                     docBlock: DocBlockGenerator::fromArray([
                         'tags' => [
                             [
-                                'name'  => 'dataProvider',
+                                'name'        => 'dataProvider',
                                 'description' => 'dataProvider',
                             ],
                         ],
@@ -150,34 +179,16 @@ final class SuiteGenerator
         }
     }
 
-    private function getClassName(): string
-    {
-        return match ($this->type)
-        {
-            self::TYPE_SOLUTION => 'Solution',
-            self::TYPE_TESTCASE => 'SolutionTest',
-            default => throw new RuntimeException(),
-        };
-    }
-
     private function getFileNamespace(): string
     {
-        $namespace = 'serhioli\\leetcode\\';
-        $namespace .= match ($this->type)
-        {
-            self::TYPE_TESTCASE => 'test\\unit\\',
-            default => '',
-        };
+        return "{$this->namespacePrefix}\\{$this->getNSAlias()}";
+    }
 
+    public function getNSAlias(): string
+    {
         $normalizedPathname = (new UnicodeString($this->suiteName))->camel()->toString();
 
-        $namespace .= sprintf(
-            'p%d_%s',
-            $this->suiteId,
-            $normalizedPathname,
-        );
-
-        return $namespace;
+        return "p{$this->suiteId}_{$normalizedPathname}";
     }
 }
 

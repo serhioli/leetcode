@@ -30,6 +30,7 @@
         "laminas/laminas-code": "^4.6",
         "phpunit/phpunit": "~9.5",
         "symfony/console": "^5.4",
+        "symfony/filesystem": "^5.4",
         "symfony/string": "^5.4",
         "vimeo/psalm": "~4.25"
     }
