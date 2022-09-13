@@ -27,7 +27,7 @@
     "require": {
         "php": ">=8.0",
         "infection/infection": "~0.26.14",
-        "laminas/laminas-code": "^4.6",
+        "laminas/laminas-code": "^4.7",
         "phpunit/phpunit": "~9.5",
         "symfony/console": "^5.4",
         "symfony/filesystem": "^5.4",
