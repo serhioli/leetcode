@@ -1,9 +1,0 @@
-risky: false
-version: 8.1
-preset: 'symfony'
-finder:
-  name: '*.php'
-  path:
-    - 'bin'
-    - 'src'
-    - 'tests'
